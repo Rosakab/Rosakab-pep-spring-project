@@ -22,8 +22,9 @@ public class AccountService {
             }
      
             if (account.getPassword() == null || account.getPassword().length() < 4) {
-                throw new IllegalArgumentException("Password needs to be at least 4 characters");
+                throw new IllegalArgumentException("Password must be at least 4 characters");
             }
+            // check to see if username already exists
             Account existingAccount = accountRepository.findByUsername(account.getUsername());
             if (existingAccount != null) {
                 throw new IllegalArgumentException("Username already exists");
@@ -43,6 +44,7 @@ public class AccountService {
 
     public Account login(String username, String password) {
         Account account = getAccountByUsername(username);
+        // ckeck to see if username already exists and if entered password is matched with the existing one!
         if (account != null && account.getPassword().equals(password)) {
             return account;
         }

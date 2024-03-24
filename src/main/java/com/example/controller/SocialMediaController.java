@@ -97,7 +97,7 @@ public class SocialMediaController {
     public ResponseEntity<Message> getMessageById(@PathVariable Integer messageId) {
         Message message = messageService.getMessageById(messageId);
         if (message == null) {
-            return ResponseEntity.ok().build(); // Return 200 OK with an empty body.
+            return ResponseEntity.ok().build(); 
         }
         return ResponseEntity.ok(message);
     }
@@ -105,16 +105,17 @@ public class SocialMediaController {
 
     @PatchMapping("/messages/{messageId}")
     public ResponseEntity<?> updateMessage(@PathVariable Integer messageId, @RequestBody Message messageUpdate) {
+        // logic can be written in MessageService! which one is the best practice???
         try {
            
             if (messageUpdate.getMessage_text().trim().isEmpty() || messageUpdate.getMessage_text().length() > 255) {
-                return ResponseEntity.badRequest().body("Message text is either empty or exceeds the allowable limit.");
+                return ResponseEntity.badRequest().body("Message text is cannot be empty or more than 255.");
             }
 
             Message updatedMessage = messageService.updateMessage(messageId, messageUpdate);
 
             if (updatedMessage == null) {
-                return ResponseEntity.badRequest().body("Message with ID " + messageId + " not found.");
+                return ResponseEntity.badRequest().body("Message with ID " + messageId + " cannot be found.");
             }
 
             return ResponseEntity.ok(1);
@@ -147,9 +148,5 @@ public class SocialMediaController {
         }
        
     }
-
-   
-   
-
 
 }

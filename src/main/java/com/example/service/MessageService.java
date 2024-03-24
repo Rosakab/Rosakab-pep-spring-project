@@ -1,14 +1,10 @@
 
-
 package com.example.service;
 
 import com.example.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import com.example.repository.MessageRepository;
-
 import java.util.Optional;
 import java.util.List;
 
@@ -47,17 +43,14 @@ public Message getMessageById(Integer id) {
 public Message updateMessage(Integer id, Message message) {
     if (messageRepository.existsById(id)) {
 
-        
         if (message.getMessage_text().isEmpty()) {
-            throw new IllegalArgumentException("Message text cannot be blank.");
+            throw new IllegalArgumentException("Text filed cannot be blank.");
         }
 
-        
         if (message.getMessage_text().length() > 255) {
-            throw new IllegalArgumentException("Message text cannot be greater than 255.");
+            throw new IllegalArgumentException("Message characters cannot be greater than 255.");
         }
 
-        
         return messageRepository.save(message);
     }
     return null; 
